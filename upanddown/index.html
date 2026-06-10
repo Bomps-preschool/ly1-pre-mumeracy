@@ -3,146 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Up and Down</title>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Arial, sans-serif;
-    background:#f2f2f2;
-    overflow:hidden;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Arial,sans-serif;background:#f2f2f2;overflow:hidden;}
 
 #gameContainer{
-    width:100vw;
-    height:100vh;
-    background:white;
-    border:8px solid #f4c400;
-    position:relative;
-    overflow:hidden;
+    width:100vw;height:100vh;background:white;
+    border:8px solid #f4c400;position:relative;overflow:hidden;
 }
 
-/* Splash Screen */
-
 #splash{
-    position:absolute;
-    inset:0;
-    background:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    position:absolute;inset:0;background:white;
+    display:flex;justify-content:center;align-items:center;
     z-index:9999;
 }
 
-.logoOnly{
-    width:220px;
-    max-width:70%;
-}
-
-/* Top Bar */
+.logoOnly{width:220px;max-width:70%;}
 
 #topBar{
-    width:100%;
-    padding:10px;
-    background:#fff8d6;
+    width:100%;padding:10px;background:#fff8d6;
     border-bottom:3px solid #f4c400;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    display:flex;justify-content:space-between;align-items:center;
 }
 
 #title{
-    background:#f4c400;
-    padding:10px 20px;
-    border-radius:15px;
-    font-size:24px;
-    font-weight:bold;
+    background:#f4c400;padding:10px 20px;
+    border-radius:15px;font-size:24px;font-weight:bold;
 }
 
-.topInfo{
-    font-size:18px;
-    font-weight:bold;
-}
+.topInfo{font-size:18px;font-weight:bold;}
 
 button{
-    padding:8px 14px;
-    border:none;
-    border-radius:10px;
-    background:#f4c400;
-    font-weight:bold;
-    cursor:pointer;
+    padding:8px 14px;border:none;border-radius:10px;
+    background:#f4c400;font-weight:bold;cursor:pointer;
     margin-left:5px;
 }
 
-/* Question */
-
-#questionArea{
-    text-align:center;
-    padding:15px;
-}
-
-#questionText{
-    font-size:32px;
-    color:#222;
-}
-
-/* Scene */
+#questionArea{text-align:center;padding:15px;}
+#questionText{font-size:32px;color:#222;}
 
 #imageArea{
-    width:100%;
-    height:68vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    width:100%;height:68vh;
+    display:flex;justify-content:center;align-items:center;
 }
 
-.scene{
-    position:relative;
-    width:100%;
-    height:100%;
-}
-
-.scene img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
+.scene{position:relative;width:100%;height:100%;}
+.scene img{width:100%;height:100%;object-fit:contain;}
 
 .hotspot{
     position:absolute;
     cursor:pointer;
-    background:transparent;
+    background:rgba(255,255,255,0);
 }
-
-/* Tick */
 
 .correctMark{
-    position:absolute;
-    width:40px;
-    height:40px;
-    background:#00c853;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-size:24px;
-    font-weight:bold;
-    z-index:100;
+    position:absolute;width:40px;height:40px;
+    background:#00c853;border-radius:50%;
+    display:flex;justify-content:center;align-items:center;
+    color:white;font-size:24px;font-weight:bold;z-index:100;
 }
 
-/* Glow */
-
-.glow{
-    animation:glow 1s infinite;
-}
+.glow{animation:glow 1s infinite;}
 
 @keyframes glow{
     0%{box-shadow:0 0 5px gold;}
@@ -150,62 +73,29 @@ button{
     100%{box-shadow:0 0 5px gold;}
 }
 
-/* Feedback */
-
 #feedback{
-    position:absolute;
-    top:50%;
-    left:50%;
+    position:absolute;top:50%;left:50%;
     transform:translate(-50%,-50%);
-    font-size:42px;
-    font-weight:bold;
-    z-index:100;
-    display:none;
+    font-size:42px;font-weight:bold;
+    z-index:100;display:none;
 }
 
-/* End Screen */
-
 #endScreen{
-    position:absolute;
-    inset:0;
-    background:white;
-    display:none;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    position:absolute;inset:0;background:white;
+    display:none;flex-direction:column;
+    justify-content:center;align-items:center;
     z-index:500;
 }
 
-#endScreen h1{
-    color:#28a745;
-    font-size:50px;
-    margin-bottom:20px;
-}
-
-#endScreen p{
-    font-size:28px;
-    margin-bottom:20px;
-}
+#endScreen h1{color:#28a745;font-size:50px;margin-bottom:20px;}
+#endScreen p{font-size:28px;margin-bottom:20px;}
 
 @media(max-width:768px){
-
-    #questionText{
-        font-size:22px;
-    }
-
-    #title{
-        font-size:18px;
-    }
-
-    .topInfo{
-        font-size:14px;
-    }
-
-    .logoOnly{
-        width:170px;
-    }
+    #questionText{font-size:22px;}
+    #title{font-size:18px;}
+    .topInfo{font-size:14px;}
+    .logoOnly{width:170px;}
 }
-
 </style>
 </head>
 
@@ -214,57 +104,37 @@ button{
 <div id="gameContainer">
 
 <div id="splash">
-    <img src="assets/innovinelogo.png" class="logoOnly">
+<img src="assets/innovinelogo.png" class="logoOnly">
 </div>
 
 <div id="topBar">
+<div id="title">Up and Down</div>
 
-    <div id="title">
-        Up and Down
-    </div>
+<div class="topInfo">
+Score: <span id="score">0</span>/8
+</div>
 
-    <div class="topInfo">
-        Score:
-        <span id="score">0</span>/8
-    </div>
-
-    <div>
-        <button onclick="toggleMute()" id="muteBtn">
-            Mute
-        </button>
-
-        <button onclick="restartGame()">
-            Restart
-        </button>
-    </div>
-
+<div>
+<button onclick="toggleMute()" id="muteBtn">Mute</button>
+<button onclick="restartGame()">Restart</button>
+</div>
 </div>
 
 <div id="questionArea">
-    <div id="questionText"></div>
+<div id="questionText"></div>
 </div>
 
 <div id="imageArea">
-    <div class="scene" id="scene"></div>
+<div class="scene" id="scene"></div>
 </div>
 
 <div id="feedback"></div>
 
 <div id="endScreen">
-
-    <h1>Great Job!</h1>
-
-    <p>You have done a great job!</p>
-
-    <p>
-        Score:
-        <span id="finalScore"></span>/8
-    </p>
-
-    <button onclick="restartGame()">
-        Play Again
-    </button>
-
+<h1>Great Job!</h1>
+<p>You have done a great job!</p>
+<p>Score: <span id="finalScore"></span>/8</p>
+<button onclick="restartGame()">Play Again</button>
 </div>
 
 <audio id="correctSound" src="assets/correct.mp3"></audio>
@@ -276,313 +146,218 @@ let currentQuestion = 0;
 let score = 0;
 let wrongAttempts = 0;
 let muted = false;
+let questionAnswered = false;
 
 const questions = [
-
 {
-question:"Circle the aeroplane flying up in the sky",
+question:"Tap the aeroplane flying up in the sky",
 background:"assets/aeroplane and car.png",
-x:"20%",
-y:"8%",
-w:"58%",
-h:"25%"
+x:"20%",y:"8%",w:"58%",h:"25%"
 },
-
 {
-question:"Circle the bird on the ground",
+question:"Tap the bird on the ground",
 background:"assets/birds.png",
-x:"50%",
-y:"65%",
-w:"18%",
-h:"18%"
+x:"50%",y:"65%",w:"24%",h:"24%"
 },
-
 {
-question:"Circle the cat on the roof",
+question:"Tap the cat on the roof",
 background:"assets/catdog.png",
-x:"65%",
-y:"7%",
-w:"15%",
-h:"16%"
+x:"65%",y:"7%",w:"22%",h:"22%"
 },
-
 {
-question:"Circle the girl coming down the elevator",
+question:"Tap the girl coming down the elevator",
 background:"assets/elevator.png",
-x:"54%",
-y:"22%",
-w:"15%",
-h:"40%"
+x:"54%",y:"22%",w:"15%",h:"40%"
 },
-
 {
-question:"Circle the lift going up",
+question:"Tap the lift going up",
 background:"assets/lift.png",
-x:"18%",
-y:"10%",
-w:"24%",
-h:"55%"
+x:"18%",y:"10%",w:"24%",h:"55%"
 },
-
 {
-question:"Circle the child who is down on the seesaw",
+question:"Tap the child who is down on the seesaw",
 background:"assets/seasaw.png",
-x:"60%",
-y:"42%",
-w:"26%",
-h:"40%"
+x:"60%",y:"42%",w:"26%",h:"40%"
 },
-
 {
-question:"Circle the boy who is climbing the slide",
+question:"Tap the boy who is climbing the slide",
 background:"assets/slide.png",
-x:"72%",
-y:"10%",
-w:"18%",
-h:"55%"
+x:"72%",y:"10%",w:"18%",h:"55%"
 },
-
 {
-question:"Circle the downside of the weighting scale",
+question:"Tap the lower side of the weighing scale",
 background:"assets/weightingscale.png",
-x:"8%",
-y:"44%",
-w:"28%",
-h:"25%"
+x:"8%",y:"44%",w:"28%",h:"25%"
 }
-
 ];
 
 function speak(text){
-
     if(muted) return;
-
     speechSynthesis.cancel();
-
-    const speech =
-    new SpeechSynthesisUtterance(text);
-
+    const speech = new SpeechSynthesisUtterance(text);
     speech.rate = 0.85;
-
     speech.pitch = 1;
-
     speech.volume = 1;
-
     speechSynthesis.speak(speech);
 }
 
 setTimeout(()=>{
-
     document.getElementById("splash").style.display="none";
-
     loadQuestion();
-
 },5000);
 
 function loadQuestion(){
 
     if(currentQuestion >= questions.length){
-
         endGame();
-
         return;
     }
 
     wrongAttempts = 0;
+    questionAnswered = false;
 
     const q = questions[currentQuestion];
 
-    document.getElementById("questionText").innerText =
-    q.question;
-
+    document.getElementById("questionText").innerText = q.question;
     speak(q.question);
 
-    const scene =
-    document.getElementById("scene");
+    const scene = document.getElementById("scene");
 
     scene.innerHTML = `
-    <img src="${q.background}">
-    <div class="hotspot"
-         id="correctArea"
-         style="
-         left:${q.x};
-         top:${q.y};
-         width:${q.w};
-         height:${q.h};">
-    </div>
+        <img src="${q.background}">
+        <div class="hotspot" id="correctArea"
+        style="left:${q.x};top:${q.y};width:${q.w};height:${q.h};"></div>
     `;
 
-    document
-    .getElementById("correctArea")
-    .onclick = (e)=>{
+    const hotspot = document.getElementById("correctArea");
 
+    hotspot.addEventListener("click", function(e){
         e.stopPropagation();
-
         correctAnswer();
-    };
+    });
 
-    scene.onclick = ()=>{
-
-        wrongAnswer();
-
-    };
+    scene.addEventListener("click", function(e){
+        if(e.target.id !== "correctArea"){
+            wrongAnswer();
+        }
+    }, {once:true});
 }
+
 function showTick(){
 
-    const hs =
-    document.getElementById("correctArea");
+    const hs = document.getElementById("correctArea");
+    if(!hs) return;
 
-    const mark =
-    document.createElement("div");
-
-    mark.className =
-    "correctMark";
-
+    const mark = document.createElement("div");
+    mark.className = "correctMark";
     mark.innerHTML = "✓";
 
     mark.style.left =
-    (hs.offsetLeft +
-    hs.offsetWidth/2 - 20) + "px";
+    (hs.offsetLeft + hs.offsetWidth/2 - 20) + "px";
 
     mark.style.top =
-    (hs.offsetTop +
-    hs.offsetHeight/2 - 20) + "px";
+    (hs.offsetTop + hs.offsetHeight/2 - 20) + "px";
 
-    document
-    .getElementById("scene")
-    .appendChild(mark);
+    document.getElementById("scene").appendChild(mark);
 }
 
 function correctAnswer(){
 
-    if(!muted)
-    document
-    .getElementById("correctSound")
-    .play();
+    if(questionAnswered) return;
+
+    questionAnswered = true;
+
+    if(!muted){
+        document.getElementById("correctSound").play();
+    }
 
     showTick();
 
     score++;
+    document.getElementById("score").innerText = score;
 
-    document
-    .getElementById("score")
-    .innerText = score;
-
-    showFeedback(
-    "Correct!",
-    "green"
-    );
-
+    showFeedback("Correct!","green");
     speak("Excellent");
 
     setTimeout(()=>{
-
         currentQuestion++;
-
         loadQuestion();
-
     },1500);
 }
 
 function wrongAnswer(){
 
+    if(questionAnswered) return;
+
     wrongAttempts++;
 
-    if(!muted)
-    document
-    .getElementById("wrongSound")
-    .play();
+    if(!muted){
+        document.getElementById("wrongSound").play();
+    }
 
     if(wrongAttempts === 1){
 
-        showFeedback(
-        "Try Again",
-        "red"
-        );
-
+        showFeedback("Try Again","red");
         speak("Try again");
 
-        document
-        .getElementById("correctArea")
-        .classList
-        .add("glow");
+        document.getElementById("correctArea")
+        .classList.add("glow");
 
-    }
-    else{
+    }else{
+
+        questionAnswered = true;
 
         showTick();
 
-        showFeedback(
-        "Correct Answer",
-        "green"
-        );
+        showFeedback("Correct Answer","green");
 
         setTimeout(()=>{
-
             currentQuestion++;
-
             loadQuestion();
-
         },1500);
     }
 }
 
 function showFeedback(text,color){
 
-    const fb =
-    document.getElementById("feedback");
+    const fb = document.getElementById("feedback");
 
     fb.innerText = text;
-
     fb.style.color = color;
-
     fb.style.display = "block";
 
     setTimeout(()=>{
-
         fb.style.display = "none";
-
     },1000);
 }
 
 function toggleMute(){
-
     muted = !muted;
-
-    document
-    .getElementById("muteBtn")
-    .innerText =
+    document.getElementById("muteBtn").innerText =
     muted ? "Unmute" : "Mute";
 }
 
 function endGame(){
 
-    if(!muted){
+    document.getElementById("finalScore").innerText = score;
+    document.getElementById("endScreen").style.display = "flex";
 
-        document
-        .getElementById("clapSound")
-        .play();
-    }
+    setTimeout(()=>{
 
-    speak(
-    "You have done a great job. Play again."
-    );
+        if(!muted){
+            document.getElementById("clapSound").play();
+        }
 
-    document
-    .getElementById("finalScore")
-    .innerText = score;
+        speak("You have done a great job. Play again.");
 
-    document
-    .getElementById("endScreen")
-    .style.display = "flex";
+    },500);
 }
 
 function restartGame(){
-
     location.reload();
 }
-
 </script>
 
+</div>
 </body>
 </html>
