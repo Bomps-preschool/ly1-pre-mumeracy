@@ -59,10 +59,10 @@ button{
 }
 
 .correctMark{
-    position:absolute;width:40px;height:40px;
+    position:absolute;width:60px;height:60px;
     background:#00c853;border-radius:50%;
     display:flex;justify-content:center;align-items:center;
-    color:white;font-size:24px;font-weight:bold;z-index:100;
+    color:white;font-size:32px;font-weight:bold;z-index:100;
 }
 
 .glow{animation:glow 1s infinite;}
@@ -117,6 +117,7 @@ Score: <span id="score">0</span>/8
 <div>
 <button onclick="toggleMute()" id="muteBtn">Mute</button>
 <button onclick="restartGame()">Restart</button>
+<button onclick="repeatQuestion()">Repeat</button>
 </div>
 </div>
 
@@ -152,53 +153,63 @@ const questions = [
 {
 question:"Tap the aeroplane flying up in the sky",
 background:"assets/aeroplane and car.png",
-x:"20%",y:"8%",w:"58%",h:"25%"
+x:"20%",y:"8%",w:"58%",h:"25%",
+tickX:"40%",tickY:"10%"
 },
 {
 question:"Tap the bird on the ground",
 background:"assets/birds.png",
-x:"50%",y:"65%",w:"24%",h:"24%"
+x:"45%",y:"60%",w:"30%",h:"30%",
+tickX:"55%",tickY:"70%"
 },
 {
 question:"Tap the cat on the roof",
 background:"assets/catdog.png",
-x:"65%",y:"7%",w:"22%",h:"22%"
+x:"60%",y:"5%",w:"28%",h:"28%",
+tickX:"70%",tickY:"10%"
 },
 {
 question:"Tap the girl coming down the elevator",
 background:"assets/elevator.png",
-x:"54%",y:"22%",w:"15%",h:"40%"
+x:"54%",y:"22%",w:"15%",h:"40%",
+tickX:"58%",tickY:"40%"
 },
 {
 question:"Tap the lift going up",
 background:"assets/lift.png",
-x:"18%",y:"10%",w:"24%",h:"55%"
+x:"18%",y:"10%",w:"28%",h:"55%",
+tickX:"25%",tickY:"30%"
 },
 {
 question:"Tap the child who is down on the seesaw",
 background:"assets/seasaw.png",
-x:"60%",y:"42%",w:"26%",h:"40%"
+x:"55%",y:"40%",w:"35%",h:"45%",
+tickX:"65%",tickY:"55%"
 },
 {
 question:"Tap the boy who is climbing the slide",
 background:"assets/slide.png",
-x:"72%",y:"10%",w:"18%",h:"55%"
+x:"70%",y:"10%",w:"25%",h:"60%",
+tickX:"75%",tickY:"25%"
 },
 {
 question:"Tap the lower side of the weighing scale",
 background:"assets/weightingscale.png",
-x:"8%",y:"44%",w:"28%",h:"25%"
+x:"8%",y:"44%",w:"32%",h:"30%",
+tickX:"15%",tickY:"55%"
 }
 ];
 
-function speak(text){
+function speak(text, delay=500){
     if(muted) return;
     speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.85;
-    speech.pitch = 1;
-    speech.volume = 1;
-    speechSynthesis.speak(speech);
+    setTimeout(()=>{
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.rate = 0.85;
+        speech.pitch = 1;
+        speech.volume = 1;
+        speechSynthesis.speak(speech);
+    }, delay);
 }
 
 setTimeout(()=>{
@@ -207,7 +218,6 @@ setTimeout(()=>{
 },5000);
 
 function loadQuestion(){
-
     if(currentQuestion >= questions.length){
         endGame();
         return;
@@ -217,12 +227,10 @@ function loadQuestion(){
     questionAnswered = false;
 
     const q = questions[currentQuestion];
-
     document.getElementById("questionText").innerText = q.question;
     speak(q.question);
 
     const scene = document.getElementById("scene");
-
     scene.innerHTML = `
         <img src="${q.background}">
         <div class="hotspot" id="correctArea"
@@ -231,12 +239,12 @@ function loadQuestion(){
 
     const hotspot = document.getElementById("correctArea");
 
-    hotspot.addEventListener("click", function(e){
+    hotspot.addEventListener("pointerdown", function(e){
         e.stopPropagation();
         correctAnswer();
     });
 
-    scene.addEventListener("click", function(e){
+    scene.addEventListener("pointerdown", function(e){
         if(e.target.id !== "correctArea"){
             wrongAnswer();
         }
@@ -244,27 +252,17 @@ function loadQuestion(){
 }
 
 function showTick(){
-
-    const hs = document.getElementById("correctArea");
-    if(!hs) return;
-
+    const q = questions[currentQuestion];
     const mark = document.createElement("div");
     mark.className = "correctMark";
     mark.innerHTML = "✓";
-
-    mark.style.left =
-    (hs.offsetLeft + hs.offsetWidth/2 - 20) + "px";
-
-    mark.style.top =
-    (hs.offsetTop + hs.offsetHeight/2 - 20) + "px";
-
+    mark.style.left = q.tickX;
+    mark.style.top = q.tickY;
     document.getElementById("scene").appendChild(mark);
 }
 
 function correctAnswer(){
-
     if(questionAnswered) return;
-
     questionAnswered = true;
 
     if(!muted){
@@ -272,12 +270,11 @@ function correctAnswer(){
     }
 
     showTick();
-
     score++;
     document.getElementById("score").innerText = score;
 
     showFeedback("Correct!","green");
-    speak("Excellent");
+    speak("Excellent",200);
 
     setTimeout(()=>{
         currentQuestion++;
@@ -286,9 +283,7 @@ function correctAnswer(){
 }
 
 function wrongAnswer(){
-
     if(questionAnswered) return;
-
     wrongAttempts++;
 
     if(!muted){
@@ -296,21 +291,13 @@ function wrongAnswer(){
     }
 
     if(wrongAttempts === 1){
-
         showFeedback("Try Again","red");
-        speak("Try again");
-
-        document.getElementById("correctArea")
-        .classList.add("glow");
-
+        speak("Try again",200);
+        document.getElementById("correctArea").classList.add("glow");
     }else{
-
         questionAnswered = true;
-
         showTick();
-
         showFeedback("Correct Answer","green");
-
         setTimeout(()=>{
             currentQuestion++;
             loadQuestion();
@@ -319,45 +306,5 @@ function wrongAnswer(){
 }
 
 function showFeedback(text,color){
-
     const fb = document.getElementById("feedback");
-
     fb.innerText = text;
-    fb.style.color = color;
-    fb.style.display = "block";
-
-    setTimeout(()=>{
-        fb.style.display = "none";
-    },1000);
-}
-
-function toggleMute(){
-    muted = !muted;
-    document.getElementById("muteBtn").innerText =
-    muted ? "Unmute" : "Mute";
-}
-
-function endGame(){
-
-    document.getElementById("finalScore").innerText = score;
-    document.getElementById("endScreen").style.display = "flex";
-
-    setTimeout(()=>{
-
-        if(!muted){
-            document.getElementById("clapSound").play();
-        }
-
-        speak("You have done a great job. Play again.");
-
-    },500);
-}
-
-function restartGame(){
-    location.reload();
-}
-</script>
-
-</div>
-</body>
-</html>
