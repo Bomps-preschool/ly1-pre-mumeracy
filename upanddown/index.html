@@ -283,4 +283,28 @@ function correctAnswer(){
 }
 
 function wrongAnswer(){
-    if
+    if(questionAnswered) return;
+    wrongAttempts++;
+
+    if(!muted){
+        document.getElementById("wrongSound").play();
+    }
+
+    if(wrongAttempts === 1){
+        showFeedback("Try Again","red");
+        speak("Try again",200);
+        document.getElementById("correctArea").classList.add("glow");
+    }else{
+        questionAnswered = true;
+        showTick();
+        showFeedback("Correct Answer","green");
+        setTimeout(()=>{
+            currentQuestion++;
+            loadQuestion();
+        },1500);
+    }
+}
+
+function showFeedback(text,color){
+    const fb = document.getElementById("feedback");
+    fb
